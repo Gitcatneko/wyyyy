@@ -17,9 +17,7 @@
         </div>
         <!-- 循环遍历所有歌手 -->
         <div class="singername">
-          <span v-for="singer in musicItem.ar" :key="singer.id"
-            >/{{ singer.name }}
-          </span>
+          <span v-for="singer in musicItem.ar" :key="singer.id">/{{ singer.name }} </span>
         </div>
       </div>
       <div class="top-right">
@@ -71,12 +69,7 @@
           <use xlink:href="#icon-wyyshangyiqu101"></use>
         </svg>
         <!-- 播放按钮 -->
-        <svg
-          class="icon bofang"
-          aria-hidden="true"
-          @click="play"
-          v-if="isPlaying"
-        >
+        <svg class="icon bofang" aria-hidden="true" @click="play" v-if="isPlaying">
           <use xlink:href="#icon-wyybofang"></use>
         </svg>
         <!-- 暂停按钮 -->
@@ -97,23 +90,23 @@
 
 <script>
 //按需导入跑马灯组件
-import { Vue3Marquee } from "vue3-marquee";
-import "vue3-marquee/dist/style.css";
-import { mapMutations } from "vuex";
+import { Vue3Marquee } from 'vue3-marquee'
+import 'vue3-marquee/dist/style.css'
+import { mapMutations } from 'vuex'
 
 export default {
   setup(props) {},
-  props: ["musicItem", "play", "isPlaying"],
+  props: ['musicItem', 'play', 'isPlaying'],
   components: {
-    Vue3Marquee,
+    Vue3Marquee
   },
   methods: {
-    ...mapMutations(["updateDetailShow"]),
+    ...mapMutations(['updateDetailShow'])
   },
   mounted() {
-    console.log(this.musicItem);
-  },
-};
+    console.log(this.musicItem)
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -191,7 +184,7 @@ export default {
       left: 46%;
       //磁针动画
       transform-origin: 0 0; //旋转的原点
-      transform: rotate(-10deg); //旋转角度：-10°
+      transform: rotate(-13deg); //旋转角度：-13°
       transition: all 2s;
     }
     .cd {
