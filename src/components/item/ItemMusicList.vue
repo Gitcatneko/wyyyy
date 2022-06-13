@@ -28,7 +28,9 @@
           <span>{{ index + 1 }}</span>
           <div class="songs">
             <p>{{ item.name }}</p>
-            <span v-for="singer in item.ar" :key="singer.id">/{{ singer.name }}</span>
+            <span v-for="singer in item.ar" :key="singer.id"
+              >/{{ singer.name }}</span
+            >
           </div>
         </div>
         <div class="itemright">
@@ -46,26 +48,24 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from "vuex";
 export default {
   setup(props) {
-    console.log(props)
-    return {}
+    console.log(props);
+    return {};
   },
-  props: ['songlist', 'subscribedCount'],
+  props: ["songlist", "subscribedCount"],
   methods: {
     playMusic(index) {
       //点击音乐列表的时候，将当前歌单歌曲列表更新至vuex
-      this.updatePlayList(this.songlist)
+      this.updatePlayList(this.songlist);
       //切换为当前所点击的歌曲
-      this.updatePlayListIndex(index)
-      //点击后自动播放该歌曲
-
-      //同时底部的按钮变为暂停
+      this.updatePlayListIndex(index);
+      //点击后，若正在播放则暂停，若正在暂停则继续播放
     },
-    ...mapMutations(['updatePlayList', 'updatePlayListIndex'])
-  }
-}
+    ...mapMutations(["updatePlayList", "updatePlayListIndex"]),
+  },
+};
 </script>
 
 <style lang="less" scoped>

@@ -94,24 +94,26 @@
 export default {
   setup(props) {
     //通过props传值，先判断若数据未拿到的情况，就需要在sessionStorage中获取数据
-    if ((props.playlist.creator = '')) {
-      props.playlist.creator = JSON.parse(sessionStorage.getItem().playlist).creator
+    if ((props.playlist.creator = "")) {
+      props.playlist.creator = JSON.parse(
+        sessionStorage.getItem().playlist
+      ).creator;
     }
     //处理数据
     function changeCount(num) {
       if (num >= 100000000) {
-        return (num / 100000000).toFixed(1) + '亿'
+        return (num / 100000000).toFixed(1) + "亿";
       } else if (num >= 10000) {
-        return (num / 10000).toFixed(1) + '万'
+        return (num / 10000).toFixed(1) + "万";
       } else {
-        return num
+        return num;
       }
     }
 
-    return { changeCount }
+    return { changeCount };
   },
-  props: ['playlist']
-}
+  props: ["playlist"],
+};
 </script>
 
 <style lang="less" scoped>
@@ -123,7 +125,7 @@ export default {
     width: 100%;
     position: fixed;
     z-index: -1;
-    // 虚化
+    // 图片虚化
     filter: blur(0.4rem);
   }
 
