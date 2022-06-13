@@ -1,0 +1,132 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3457697 */
+  src: url('iconfont.woff2?t=1654941583367') format('woff2'),
+       url('iconfont.woff?t=1654941583367') format('woff'),
+       url('iconfont.ttf?t=1654941583367') format('truetype'),
+       url('iconfont.svg?t=1654941583367#iconfont') format('svg');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-wyysousuo:before {
+  content: "\e752";
+}
+
+.icon-wyyliebiao:before {
+  content: "\e62d";
+}
+
+.icon-wyytuijian:before {
+  content: "\e63f";
+}
+
+.icon-wyyzhibo:before {
+  content: "\e6d9";
+}
+
+.icon-wyypaihangbang:before {
+  content: "\e782";
+}
+
+.icon-wyygedan:before {
+  content: "\e66a";
+}
+
+.icon-wyyzu:before {
+  content: "\e613";
+}
+
+.icon-wyyshanchu:before {
+  content: "\e629";
+}
+
+.icon-wyyxiazai:before {
+  content: "\e668";
+}
+
+.icon-wyyliebiao2:before {
+  content: "\e600";
+}
+
+.icon-wyyplayfill:before {
+  content: "\e74f";
+}
+
+.icon-wyyfenxiang:before {
+  content: "\e739";
+}
+
+.icon-wyyyooxi:before {
+  content: "\e61c";
+}
+
+.icon-wyyshangyiqu101:before {
+  content: "\e6e1";
+}
+
+.icon-wyyxiayiqu101:before {
+  content: "\e718";
+}
+
+.icon-wyyzanting:before {
+  content: "\e69d";
+}
+
+.icon-wyybofang:before {
+  content: "\e8a3";
+}
+
+.icon-wyyxunhuan:before {
+  content: "\e623";
+}
+
+.icon-wyyshipin:before {
+  content: "\e61e";
+}
+
+.icon-wyybofang_o:before {
+  content: "\eb5e";
+}
+
+.icon-wyyduoxuanxuanzhong_o:before {
+  content: "\eb5f";
+}
+
+.icon-wyyjiahao_o:before {
+  content: "\eb78";
+}
+
+.icon-wyyxiaoxi:before {
+  content: "\ec3b";
+}
+
+.icon-wyyliebiaoxuanze-:before {
+  content: "\e619";
+}
+
+.icon-wyyyoujiantou:before {
+  content: "\e667";
+}
+
+.icon-wyyzuojiantou:before {
+  content: "\e669";
+}
+
+.icon-wyykongxinwenhao:before {
+  content: "\ed19";
+}
+
+.icon-wyyaixin:before {
+  content: "\e8ab";
+}
+
+.icon-wyyyinlechangpian:before {
+  content: "\e683";
+}
+
