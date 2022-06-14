@@ -1,3 +1,4 @@
+//vant组件库集中管理
 import { Swipe, SwipeItem, Button, Popup } from "vant";
 
 let plugins = [Swipe, SwipeItem, Button, Popup];

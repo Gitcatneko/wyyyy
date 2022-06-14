@@ -17,7 +17,9 @@
         </div>
         <!-- 循环遍历所有歌手 -->
         <div class="singername">
-          <span v-for="singer in musicItem.ar" :key="singer.id">/{{ singer.name }} </span>
+          <span v-for="singer in musicItem.ar" :key="singer.id"
+            >/{{ singer.name }}
+          </span>
         </div>
       </div>
       <div class="top-right">
@@ -29,9 +31,22 @@
 
     <!-- 中间内容，黑胶唱片 -->
     <div class="mid-content">
+      <!-- 黑胶外圈 -->
       <img src="@/assets/cdmusic.png" alt="" class="cd" />
-      <img src="@/assets/cizhen.png" alt="" class="cz" />
-      <img :src="musicItem.al.picUrl" alt="" class="cpic" />
+      <!-- 磁针 -->
+      <img
+        src="@/assets/cizhen.png"
+        alt=""
+        class="cz"
+        :class="{ cz_active: !isPlaying }"
+      />
+      <!-- 磁盘图片 -->
+      <img
+        :src="musicItem.al.picUrl"
+        alt=""
+        class="cpic"
+        :class="{ cpic_active: !isPlaying, cpic_pause: isPlaying }"
+      />
     </div>
 
     <!-- 底部控制区 -->
@@ -69,7 +84,12 @@
           <use xlink:href="#icon-wyyshangyiqu101"></use>
         </svg>
         <!-- 播放按钮 -->
-        <svg class="icon bofang" aria-hidden="true" @click="play" v-if="isPlaying">
+        <svg
+          class="icon bofang"
+          aria-hidden="true"
+          @click="play"
+          v-if="isPlaying"
+        >
           <use xlink:href="#icon-wyybofang"></use>
         </svg>
         <!-- 暂停按钮 -->
@@ -90,23 +110,23 @@
 
 <script>
 //按需导入跑马灯组件
-import { Vue3Marquee } from 'vue3-marquee'
-import 'vue3-marquee/dist/style.css'
-import { mapMutations } from 'vuex'
+import { Vue3Marquee } from "vue3-marquee";
+import "vue3-marquee/dist/style.css";
+import { mapMutations } from "vuex";
 
 export default {
   setup(props) {},
-  props: ['musicItem', 'play', 'isPlaying'],
+  props: ["musicItem", "play", "isPlaying"],
   components: {
-    Vue3Marquee
+    Vue3Marquee,
   },
   methods: {
-    ...mapMutations(['updateDetailShow'])
+    ...mapMutations(["updateDetailShow"]),
   },
   mounted() {
-    console.log(this.musicItem)
-  }
-}
+    console.log(this.musicItem);
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -187,6 +207,17 @@ export default {
       transform: rotate(-13deg); //旋转角度：-13°
       transition: all 2s;
     }
+    .cz_active {
+      width: 2rem;
+      height: 3rem;
+      position: absolute;
+      left: 46%;
+      //旋转后的磁针动画
+      transform-origin: 0 0; //旋转的原点
+      transform: rotate(0deg); //由-13°旋转到0°
+      transition: all 2s;
+    }
+
     .cd {
       width: 5rem;
       height: 5rem;
@@ -194,6 +225,7 @@ export default {
       bottom: 2.3rem;
       z-index: -1;
     }
+
     .cpic {
       width: 3.2rem;
       height: 3.2rem;
@@ -201,6 +233,27 @@ export default {
       bottom: 3.14rem;
       border-radius: 50%;
       z-index: -2;
+      //将动画添加至该类中，参数为该动画类名 动画周期 匀速 无限循环
+      animation: rotate_cpic 10s linear infinite;
+    }
+    //磁盘图片旋转动画
+    @keyframes rotate_cpic {
+      0% {
+        //从0°开始转
+        transform: rotateZ(0deg);
+      }
+      100% {
+        //转满一圈
+        transform: rotateZ(360deg);
+      }
+    }
+    //控制动画是否启动
+    .cpic_active {
+      animation-play-state: running;
+    }
+    //控制动画是否暂停
+    .cpic_pause {
+      animation-play-state: paused;
     }
   }
 
