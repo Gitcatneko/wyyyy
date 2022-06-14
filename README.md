@@ -7,7 +7,7 @@
 NeteaseCloudMusicApi
 ```
 
-### 网易云音乐离线接口地址
+### 网易云音乐Api地址
 ```
 https://binaryify.github.io/NeteaseCloudMusicApi/
 ```
