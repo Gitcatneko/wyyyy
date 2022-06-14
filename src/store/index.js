@@ -1,3 +1,4 @@
+import { getItemLyric } from "@/request/api/item";
 import { createStore } from "vuex";
 
 export default createStore({
@@ -30,6 +31,8 @@ export default createStore({
     isPlaying: true,
     //歌曲详情页显示
     detailShow: false,
+    //歌词数据
+    musicLyric: {}
   },
   getters: {},
   mutations: {
@@ -40,7 +43,7 @@ export default createStore({
     //获取当前歌单所有歌曲
     updatePlayList(state, value) {
       state.playList = value;
-      console.log(state.playList);
+      // console.log(state.playList);
     },
     //改变播放的歌曲
     updatePlayListIndex(state, value) {
@@ -50,7 +53,22 @@ export default createStore({
     updateDetailShow(state) {
       state.detailShow = !state.detailShow;
     },
+    //更新歌词数据
+    updateMusicLyric(state, value) {
+      state.musicLyric = value
+    }
   },
-  actions: {},
+  //在actions中处理异步请求
+  actions: {
+    //异步请求歌词
+    async getMusicLyric(context, value) {
+      //解构得到歌词数据
+      let { data: res } = await getItemLyric(value)
+      console.log(res);
+      // console.log(res.lrc.lyric);
+      //处理歌词数据，将其提交至仓库state中，传参为歌词数据
+      context.commit('updateMusicLyric', res)
+    }
+  },
   modules: {},
 });

@@ -24,87 +24,82 @@
       </svg>
     </div>
     <!-- 音乐播放audio -->
-    <audio
-      ref="audio"
-      :src="`https://music.163.com/song/media/outer/url?id=${playList[playListIndex].id}.mp3`"
-    ></audio>
+    <audio ref="audio" :src="`https://music.163.com/song/media/outer/url?id=${playList[playListIndex].id}.mp3`"></audio>
     <!-- 歌曲详情弹出层 -->
-    <van-popup
-      v-model:show="detailShow"
-      position="right"
-      :style="{ height: '100%', width: '100%' }"
-    >
+    <van-popup v-model:show="detailShow" position="right" :style="{ height: '100%', width: '100%' }">
       <!-- 歌曲详情页，并且父传子，将当前播放的歌曲传给子 -->
-      <MusicDetail
-        :musicItem="playList[playListIndex]"
-        :play="play"
-        :isPlaying="isPlaying"
-      ></MusicDetail>
+      <MusicDetail :musicItem="playList[playListIndex]" :play="play" :isPlaying="isPlaying"></MusicDetail>
     </van-popup>
   </div>
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
-import MusicDetail from "./MusicDetail.vue";
+import { mapMutations, mapState } from 'vuex'
+import MusicDetail from './MusicDetail.vue'
 //按需导入跑马灯组件
-import { Vue3Marquee } from "vue3-marquee";
-import "vue3-marquee/dist/style.css";
+import { Vue3Marquee } from 'vue3-marquee'
+import 'vue3-marquee/dist/style.css'
 
 export default {
   setup(props) {
-    return {};
+    return {}
   },
   components: {
     MusicDetail,
-    Vue3Marquee,
+    Vue3Marquee
   },
   methods: {
     play() {
       //判断音乐是否播放
       if (this.$refs.audio.paused) {
         //如果为暂停，就播放
-        this.$refs.audio.play();
+        this.$refs.audio.play()
         //然后把按钮设置成暂停
-        this.updateIsPlaying(false);
+        this.updateIsPlaying(false)
       } else {
         //如果在播放，就暂停
-        this.$refs.audio.pause();
+        this.$refs.audio.pause()
         //然后把按钮设置成播放
-        this.updateIsPlaying(true);
+        this.updateIsPlaying(true)
       }
     },
     //通过辅助函数进行解构方法
-    ...mapMutations(["updateIsPlaying", "updateDetailShow"]),
+    ...mapMutations(['updateIsPlaying', 'updateDetailShow'])
   },
   computed: {
     //通过辅助函数进行解构数据
-    ...mapState(["playList", "playListIndex", "isPlaying", "detailShow"]),
+    ...mapState(['playList', 'playListIndex', 'isPlaying', 'detailShow'])
     //解构方法
   },
   watch: {
     //监听，若当前播放的音乐发生改变，即playListIndex或者播放列表playlist发生变化
     playListIndex() {
       //则自动播放音乐
-      this.$refs.audio.autoplay = true;
+      this.$refs.audio.autoplay = true
       //并且图标改为暂停状态
-      this.updateIsPlaying(false);
+      this.updateIsPlaying(false)
     },
     playList() {
-      this.$refs.audio.autoplay = true;
+      this.$refs.audio.autoplay = true
       //判断按钮为暂停状态时，就改为播放
       if (this.isPlaying) {
         //则自动播放音乐
-        this.$refs.audio.autoplay = true;
+        this.$refs.audio.autoplay = true
         //并且图标改为暂停状态
-        this.updateIsPlaying(false);
+        this.updateIsPlaying(false)
       }
-    },
+    }
   },
   mounted() {
-    console.log(this.$refs);
+    // 打印audio
+    // console.log(this.$refs)
   },
-};
+  updated() {
+    //sction 通过 store.dispatch 方法触发：
+    //传参：当前多播放音乐的id
+    this.$store.dispatch('getMusicLyric', this.playList[this.playListIndex].id)
+  }
+}
 </script>
 
 <style lang="less" scoped>

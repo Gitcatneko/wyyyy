@@ -27,3 +27,14 @@ export function getItmeList(gedanId, lim) {
 
   })
 }
+
+//获取当前播放歌曲的歌词
+export function getItemLyric(musicId) {
+  return service({
+    method: 'GET',
+    url: '/lyric',
+    params: {
+      id: musicId
+    }
+  })
+}

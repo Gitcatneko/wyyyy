@@ -17,9 +17,7 @@
         </div>
         <!-- 循环遍历所有歌手 -->
         <div class="singername">
-          <span v-for="singer in musicItem.ar" :key="singer.id"
-            >/{{ singer.name }}
-          </span>
+          <span v-for="singer in musicItem.ar" :key="singer.id">/{{ singer.name }} </span>
         </div>
       </div>
       <div class="top-right">
@@ -30,23 +28,18 @@
     </div>
 
     <!-- 中间内容，黑胶唱片 -->
-    <div class="mid-content">
+    <div class="mid-content" v-show="isLyricShow">
       <!-- 黑胶外圈 -->
       <img src="@/assets/cdmusic.png" alt="" class="cd" />
       <!-- 磁针 -->
-      <img
-        src="@/assets/cizhen.png"
-        alt=""
-        class="cz"
-        :class="{ cz_active: !isPlaying }"
-      />
+      <img src="@/assets/cizhen.png" alt="" class="cz" :class="{ cz_active: !isPlaying }" />
       <!-- 磁盘图片 -->
-      <img
-        :src="musicItem.al.picUrl"
-        alt=""
-        class="cpic"
-        :class="{ cpic_active: !isPlaying, cpic_pause: isPlaying }"
-      />
+      <img :src="musicItem.al.picUrl" alt="" class="cpic" :class="{ cpic_active: !isPlaying, cpic_pause: isPlaying }" />
+    </div>
+
+    <!-- 中间歌词显示部分 -->
+    <div class="mid-lyric-content">
+      <p v-for="item in lyric" :key="item">{{ item.lrc }}</p>
     </div>
 
     <!-- 底部控制区 -->
@@ -84,12 +77,7 @@
           <use xlink:href="#icon-wyyshangyiqu101"></use>
         </svg>
         <!-- 播放按钮 -->
-        <svg
-          class="icon bofang"
-          aria-hidden="true"
-          @click="play"
-          v-if="isPlaying"
-        >
+        <svg class="icon bofang" aria-hidden="true" @click="play" v-if="isPlaying">
           <use xlink:href="#icon-wyybofang"></use>
         </svg>
         <!-- 暂停按钮 -->
@@ -110,23 +98,55 @@
 
 <script>
 //按需导入跑马灯组件
-import { Vue3Marquee } from "vue3-marquee";
-import "vue3-marquee/dist/style.css";
-import { mapMutations } from "vuex";
+import { Vue3Marquee } from 'vue3-marquee'
+import 'vue3-marquee/dist/style.css'
+import { mapMutations, mapState } from 'vuex'
 
 export default {
   setup(props) {},
-  props: ["musicItem", "play", "isPlaying"],
+  props: ['musicItem', 'play', 'isPlaying'],
   components: {
-    Vue3Marquee,
+    Vue3Marquee
   },
   methods: {
-    ...mapMutations(["updateDetailShow"]),
+    ...mapMutations(['updateDetailShow'])
+  },
+  computed: {
+    ...mapState(['musicLyric']),
+    //对歌词原数据进行处理，歌词是string类型，需要
+    lyric() {
+      //最后需要返回处理好数据的数组arr
+      let arr
+      //问题：如果vuex中的歌词数据musicLyric没有获取到，而DOM却已经渲染完成，就会拿不到数据
+      //解决：加个判断，等到数据拿到之后，再进行处理
+      if (this.musicLyric) {
+        //使用正则切割数据，以换行切割
+        arr = this.musicLyric.lrc.lyric.split(/[(\r\n)\r\n]+/).map((item, index) => {
+          let min = item.slice(1, 3) //分
+          let sec = item.slice(4, 6) //秒
+          let mill = item.slice(7, 10) //毫秒
+          let lrc = item.slice(11, item.length) //歌词主体
+          // console.log(min, sec, mill, lrc)
+          // 毫秒有时三位数有事两位数，两位数时切割带有]符号，判断NaN，需要再加判断
+          if (isNaN(Number(mill))) {
+            //如果毫秒是两位数的时候，重新切割
+            mill = item.slice(7, 9)
+            //后面的歌词主体也重新切割
+            lrc = item.slice(10, item.length)
+          }
+          //当前歌曲进度时长转换为数字类型，并以毫秒显示
+          let time = parseInt(min * 60 * 1000 + sec * 1000 + mill)
+          //最后用对象形式将数据包起来丢到arr数组中去
+          return { min, sec, mill, lrc, time } //键和值相同，简写形式
+        })
+        return arr
+      }
+    }
   },
   mounted() {
-    console.log(this.musicItem);
-  },
-};
+    console.log(this.musicItem)
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -189,6 +209,7 @@ export default {
     }
   }
 
+  // 黑胶磁盘部分
   .mid-content {
     width: 100%;
     height: 9rem;
@@ -257,9 +278,32 @@ export default {
     }
   }
 
+  //中间歌词显示部分
+  .mid-lyric-content {
+    width: 100%;
+    height: 9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0.2rem;
+    //溢出滚动条
+    overflow: scroll;
+
+    p {
+      color: #5e7fbd;
+      margin-bottom: 0.2rem;
+      font-size: 0.32rem;
+      text-align: center;
+    }
+  }
+
+  // 底部控制区域
   .footer-control {
     width: 100%;
-
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0;
     .footer-btns {
       width: 100%;
       height: 1rem;
@@ -272,6 +316,10 @@ export default {
         fill: #ff3a3a;
       }
     }
+    //进度条
+    .footer-progressbar {
+      width: 100%;
+    }
 
     .footer-play {
       width: 100%;
@@ -279,9 +327,6 @@ export default {
       display: flex;
       justify-content: space-around;
       align-items: center;
-      //贴合在底部
-      position: absolute;
-      bottom: 0;
       .icon {
         width: 0.5rem;
         height: 0.5rem;
