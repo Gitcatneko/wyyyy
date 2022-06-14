@@ -28,7 +28,7 @@
     </div>
 
     <!-- 中间内容，黑胶唱片 -->
-    <div class="mid-content" v-show="isLyricShow">
+    <div class="mid-content" @click="letLyricShow" v-if="!isLyricShow">
       <!-- 黑胶外圈 -->
       <img src="@/assets/cdmusic.png" alt="" class="cd" />
       <!-- 磁针 -->
@@ -38,7 +38,7 @@
     </div>
 
     <!-- 中间歌词显示部分 -->
-    <div class="mid-lyric-content">
+    <div class="mid-lyric-content" @click="letLyricShow" v-else>
       <p v-for="item in lyric" :key="item">{{ item.lrc }}</p>
     </div>
 
@@ -105,11 +105,20 @@ import { mapMutations, mapState } from 'vuex'
 export default {
   setup(props) {},
   props: ['musicItem', 'play', 'isPlaying'],
+  data() {
+    return {
+      isLyricShow: false
+    }
+  },
   components: {
     Vue3Marquee
   },
   methods: {
-    ...mapMutations(['updateDetailShow'])
+    ...mapMutations(['updateDetailShow']),
+    //黑胶碟片和歌词切换显示
+    letLyricShow() {
+      this.isLyricShow = !this.isLyricShow
+    }
   },
   computed: {
     ...mapState(['musicLyric']),
@@ -139,8 +148,8 @@ export default {
           //最后用对象形式将数据包起来丢到arr数组中去
           return { min, sec, mill, lrc, time } //键和值相同，简写形式
         })
-        return arr
       }
+      return arr
     }
   },
   mounted() {
@@ -285,13 +294,13 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 0.2rem;
+    padding: 0.2rem;
     //溢出滚动条
     overflow: scroll;
 
     p {
-      color: #5e7fbd;
-      margin-bottom: 0.2rem;
+      color: #fffb00;
+      margin-bottom: 0.3rem;
       font-size: 0.32rem;
       text-align: center;
     }
