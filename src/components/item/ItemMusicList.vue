@@ -27,10 +27,10 @@
         <div class="itemleft" @click="playMusic(index)">
           <span>{{ index + 1 }}</span>
           <div class="songs">
-            <p>{{ item.name }}</p>
-            <span v-for="singer in item.ar" :key="singer.id"
-              >/{{ singer.name }}</span
-            >
+            <!-- 歌名 -->
+            <div class="songname">{{ item.name }}</div>
+            <!-- 歌手 -->
+            <span class="singername" v-for="singer in item.ar" :key="singer.id">/{{ singer.name }}</span>
           </div>
         </div>
         <div class="itemright">
@@ -48,24 +48,24 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapMutations, mapState } from 'vuex'
 export default {
   setup(props) {
-    console.log(props);
-    return {};
+    console.log(props)
+    return {}
   },
-  props: ["songlist", "subscribedCount"],
+  props: ['songlist', 'subscribedCount'],
   methods: {
     playMusic(index) {
       //点击音乐列表的时候，将当前歌单歌曲列表更新至vuex
-      this.updatePlayList(this.songlist);
+      this.updatePlayList(this.songlist)
       //切换为当前所点击的歌曲
-      this.updatePlayListIndex(index);
+      this.updatePlayListIndex(index)
       //点击后，若正在播放则暂停，若正在暂停则继续播放
     },
-    ...mapMutations(["updatePlayList", "updatePlayListIndex"]),
-  },
-};
+    ...mapMutations(['updatePlayList', 'updatePlayListIndex'])
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -140,16 +140,18 @@ export default {
         }
         .songs {
           width: 85%;
-
-          p {
+          // 文字不换行
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          .songname {
             margin-top: 0.14rem;
             font-weight: bold;
             height: 0.4rem;
-            // overflow: hidden;
-            // text-overflow: ellipsis;
-            // 单行显示并跑马灯
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
-          span {
+          .singername {
             color: #9fa5ac;
             font-size: 0.26rem;
             height: 0.3rem;

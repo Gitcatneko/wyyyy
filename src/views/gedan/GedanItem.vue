@@ -27,8 +27,8 @@ export default {
       state.playlist = gedan.playlist
       console.log(state.playlist)
 
-      //获取歌单歌曲列表
-      let { data: everyitem } = await getItmeList(id, 20)
+      //获取歌单歌曲列表，参数(歌曲id, 限制显示歌曲个数不填则显示所有歌)
+      let { data: everyitem } = await getItmeList(id)
       state.songlist = everyitem.songs
       console.log(state.songlist)
 
