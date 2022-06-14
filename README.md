@@ -1,19 +1,15 @@
 # wangyiyun_app
 
-## Project setup
+## 说明
 ```
-后端接口使用网易云音乐node.js离线版
-```
-
-### Compiles and hot-reloads for development
-```
+后端接口使用网易云音乐node.js离线版，
 需要下载网易云音乐离线接口NeteaseCloudMusicApi
 ```
 
-### Compiles and minifies for production
+### 网易云音乐离线接口地址
 ```
 https://binaryify.github.io/NeteaseCloudMusicApi/
 ```
 
-### Customize configuration
+### 说明
 然后在src/request/api目录下修改index.js内的baseURL
