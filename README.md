@@ -3,7 +3,8 @@
 ## 说明
 ```
 后端接口使用网易云音乐node.js版
-需要下载网易云音乐离线接口NeteaseCloudMusicApi
+需要下载网易云音乐api
+NeteaseCloudMusicApi
 ```
 
 ### 网易云音乐离线接口地址
