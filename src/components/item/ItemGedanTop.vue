@@ -27,10 +27,12 @@
         <h4>{{ playlist.name }}</h4>
 
         <div class="item-touxiang">
+          <!-- 歌单创建者头像 -->
           <span>
-            <img :src="playlist.creator.avatarUrl" alt="" />
+            <img :src="creator.avatarUrl" alt="" />
           </span>
-          <span>{{ playlist.creator.nickname }}</span>
+          <!-- 歌单创建者昵称 -->
+          <span>{{ creator.nickname }}</span>
           <span>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-wyyyoujiantou"></use>
@@ -93,27 +95,39 @@
 <script>
 export default {
   setup(props) {
-    //通过props传值，先判断若数据未拿到的情况，就需要在sessionStorage中获取数据
-    if ((props.playlist.creator = "")) {
-      props.playlist.creator = JSON.parse(
-        sessionStorage.getItem().playlist
-      ).creator;
-    }
-    //处理数据
+    //问题1：数据对象层次太深，当DOM渲染结束后，异步请求的数据无法渲染成功，playlist数据由父组件GedanItem传过来
+    //解决1：通过props传值，先判断若数据未拿到的情况，就需要在sessionStorage中获取数据
+    /* if ((props.playlist.creator = '')) {
+      props.playlist.creator = JSON.parse(sessionStorage.getItem().playlist).creator
+    } */
+
+    //处理数字数据
     function changeCount(num) {
       if (num >= 100000000) {
-        return (num / 100000000).toFixed(1) + "亿";
+        return (num / 100000000).toFixed(1) + '亿'
       } else if (num >= 10000) {
-        return (num / 10000).toFixed(1) + "万";
+        return (num / 10000).toFixed(1) + '万'
       } else {
-        return num;
+        return num
       }
     }
 
-    return { changeCount };
+    return { changeCount }
   },
-  props: ["playlist"],
-};
+  props: ['playlist'],
+  data() {
+    return {
+      creator: {}
+    }
+  },
+  updated() {
+    //问题1：数据对象层次太深，当DOM渲染结束后，异步请求的数据无法渲染成功，playlist数据由父组件GedanItem传过来
+    //解决2：使用$nextTick等待异步请求结束后再渲染DOM
+    this.$nextTick(() => {
+      this.creator = this.playlist.creator
+    })
+  }
+}
 </script>
 
 <style lang="less" scoped>

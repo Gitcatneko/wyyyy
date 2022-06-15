@@ -299,7 +299,7 @@ export default {
     overflow: scroll;
 
     p {
-      color: #fffb00;
+      color: #ceedff;
       margin-bottom: 0.3rem;
       font-size: 0.32rem;
       text-align: center;

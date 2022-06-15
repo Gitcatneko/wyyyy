@@ -32,10 +32,11 @@ export default {
       state.songlist = everyitem.songs
       // console.log(state.songlist)
 
-      //防止页面刷新，数据丢失，将数据保存到sessionStorage或localStorage中
-      //要保存playlist这个对象，要先转换成json
-      //这里直接将整个state保存进sessionStorage中
-      sessionStorage.setItem('itemDetail', JSON.stringify(state))
+      //问题1：数据对象层次太深，当DOM渲染结束后，异步请求的数据无法渲染成功
+      //解决1：防止页面刷新，数据丢失，将数据保存到sessionStorage或localStorage中，
+      // 要保存playlist这个对象，要先转换成json，
+      // 这里直接将整个state保存进sessionStorage中
+      // sessionStorage.setItem('itemDetail', JSON.stringify(state))
     })
 
     return { state }
